@@ -2,14 +2,14 @@
   <swiper>
     <swiper-item v-for="(item, index) in banner" :key="index">
       <a :href="item.link">
-        <img :src="item.image" alt="">
+        <img :src="item.image" alt="" @load="imgLoadingFinish" />
       </a>
     </swiper-item>
   </swiper>
 </template>
 
 <script>
-import { Swiper, SwiperItem } from "components/common/swiper"
+import { Swiper, SwiperItem } from "components/common/swiper";
 
 export default {
   name: "HomeSwiper",
@@ -17,17 +17,27 @@ export default {
     banner: {
       type: Array,
       default() {
-        return []
-      }
-    }
+        return [];
+      },
+    },
   },
   components: {
     Swiper,
-    SwiperItem
+    SwiperItem,
   },
   data() {
-    return {};
-  }
+    return {
+      imgLoad: false,
+    };
+  },
+  methods: {
+    imgLoadingFinish() {
+      if (!this.imgLoad) {
+        this.$emit("imgLoadingFinish");
+        this.imgLoad = true;
+      }
+    },
+  },
 };
 </script>
 
